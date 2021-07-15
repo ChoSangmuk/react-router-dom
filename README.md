@@ -102,7 +102,7 @@ ReactDOM.render(
 
 ## Route
 - Route 역시 Router와 마찬가지로 import해서 사용
-- 특정 URL이 입력되었을 때 사용되어야할 컴포넌트가 있다면 해당 컴포넌트를 Route 컴포넌트로 감싸주고 Route path Props에 해당 URL을 작성해주면 됨
+- 특정 URL이 입력되었을 때 사용되어야할 컴포넌트가 있다면 해당 컴포넌트를 Route 컴포넌트로 감싸주고 Route의 Props(path)에 해당 URL을 작성해주면 됨
 - 이동이 편리하게 특정 URL로 이동시켜주는 변경해주는 a 태그를 삽입
 ```js
 // index.js ... 
@@ -125,8 +125,11 @@ function App() {
 }
 ```
 - "/topics" URL 입력 시, Home 컴포넌트와 Topics 컴포넌트 둘 다 사용됨
-  - Route의 Props 중 exact가 없으면 path와 URL이 비슷한 건 전부 다 매칭됨
-  - exact를 사용하면 정확히 매칭되는 경우에만 컴포넌트가 사용됨
+  - URL이 Route path를 포함하면 (Route로 감싼) 컴포넌트가 실행됨
+  - exact를 사용하면 정확히 매칭되는 경우에만 (Route로 감싼) 컴포넌트가 사용됨
+- 동적라우팅? 
+  - 컴포넌트가 어디에 있던 간에 Route의 path를 지정하여 감싸주기만 하면, 그 컴포넌트(라우트)가 화면에 출력되게 하는 것 
+  - 다른 말로는 Route의 path에 특정 값을 넣어 해당 페이지로 이동할 수 있게 하는 것
 
 ## Switch
 - Switch Componen는 exact를 사용하지 않고도 exact를 사용한 것과 같은 효과를 원할 때 route를 switch로 감싸주면됨
@@ -193,3 +196,8 @@ function Topics() {
 ## parameter
 - 양이 많아지면 별로임
 - 배열을 만들어서 자동으로 리스트가 만들어 지고, 자동으로 라우트가 만들어 지도록 하고 싶음
+
+## Reference
+- 동적라우팅
+  - https://velog.io/@jjburi/React-%EB%8F%99%EC%A0%81-%EB%9D%BC%EC%9A%B0%ED%8C%85Dynamic-Routing
+  - https://velog.io/@edie_ko/React-%EB%8F%99%EC%A0%81%EB%9D%BC%EC%9A%B0%ED%8C%85-Dynamic-Routing%EC%9C%BC%EB%A1%9C-%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0

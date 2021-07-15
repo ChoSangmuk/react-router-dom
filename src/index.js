@@ -12,11 +12,13 @@ function Home() {
     </div>
   );
 }
+
 var contents = [
   { id: 1, title: "HTML", description: "HTML ... " },
   { id: 2, title: "JS", description: "JS ... " },
   { id: 3, title: "React", description: "React ... " },
 ]
+
 function Topic() {
   return (
     <div>
@@ -25,6 +27,7 @@ function Topic() {
     </div>
   );
 }
+
 function Topics() {
   var list = contents.map(content => <li key={content.id}><NavLink to={"/topics/" + content.id}>{content.title}</NavLink></li>);
   return (
