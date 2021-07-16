@@ -115,9 +115,9 @@ function App() {
         <li><a href="/topics">Topics</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
-      <Route path="/"> <Home /> </Route>
-      <Route path="/topics"> <Topics /> </Route>
-      <Route path="/contact"> <Contact /> </Route>
+      <Route path="/"><Home /></Route>
+      <Route path="/topics"><Topics /></Route>
+      <Route path="/contact"><Contact /></Route>
     </div>
   );
 }
@@ -127,9 +127,9 @@ function App() {
   - exact를 사용하면 정확히 매칭되는 경우에만 (Route로 감싼) 컴포넌트가 사용됨
 ```js
 // index.js ...
-<Route exact path="/"> <Home /> </Route>
-<Route path="/topics"> <Topics /> </Route>
-<Route path="/contact"> <Contact /> </Route>
+<Route exact path="/"><Home /></Route>
+<Route path="/topics"><Topics /></Route>
+<Route path="/contact"><Contact /></Route>
 ```
 - 동적라우팅? 
   - 컴포넌트가 어디에 있던 간에 Route의 path를 지정하여 감싸주기만 하면, 그 컴포넌트(Route)가 화면에 출력되게 하는 것 
@@ -153,10 +153,10 @@ function App() {
         <li><a href="/contact">Contact</a></li>
       </ul>
       <Switch>
-        <Route exact path="/"> <Home /> </Route>
-        <Route path="/topics"> <Topics /> </Route>
-        <Route path="/contact"> <Contact /> </Route>
-        <Route path="/"> <Home /> </Route>
+        <Route exact path="/"><Home /></Route>
+        <Route path="/topics"><Topics /></Route>
+        <Route path="/contact"><Contact /></Route>
+        <Route path="/"><Home /></Route>
       </Switch>
     </div>
   );
@@ -183,10 +183,10 @@ function App() {
         <li><Link to="/contact">Contact</Link></li>
       </ul>
       <Switch>
-        <Route exact path="/"> <Home /> </Route>
-        <Route path="/topics"> <Topics /> </Route>
-        <Route path="/contact"> <Contact /> </Route>
-        <Route path="/"> <Home /> </Route>
+        <Route exact path="/"><Home /></Route>
+        <Route path="/topics"><Topics /></Route>
+        <Route path="/contact"><Contact /></Route>
+        <Route path="/"><Home /></Route>
       </Switch>
     </div>
   );
@@ -206,7 +206,7 @@ function App() {
 - NavLink 역시 Link, Switch, Route, Router와 마찬가지로 import해서 사용
 ```js
 // index.js ...
-import { BrowserRouter as Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 // ...
 function App() {
   return (
@@ -218,10 +218,10 @@ function App() {
         <li><NavLink to="/contact">Contact</NavLink></li>
       </ul>
       <Switch>
-        <Route exact path="/"> <Home /> </Route>
-        <Route path="/topics"> <Topics /> </Route>
-        <Route path="/contact"> <Contact /> </Route>
-        <Route path="/"> <Home /> </Route>
+        <Route exact path="/"><Home /></Route>
+        <Route path="/topics"><Topics /></Route>
+        <Route path="/contact"><Contact /></Route>
+        <Route path="/"><Home /></Route>
       </Switch>
     </div>
   );
@@ -249,8 +249,9 @@ function App() {
 ```
 
 ## Nested Routing
-- path="/topics:id"
-- 라우터 안에 라우터 중첩 동작
+- Route 안에 Route 중첩 동작 가능
+```js
+// index.js ...
 function Topics() {
   return (
     <div>
@@ -268,10 +269,11 @@ function Topics() {
     </div>
   );
 }
+```
 
-## parameter
-- 양이 많아지면 별로임
-- 배열을 만들어서 자동으로 리스트가 만들어 지고, 자동으로 라우트가 만들어 지도록 하고 싶음
+## Parameter
+- Topics의 양이 많아지거나 동적으로 데이터를 받아오는 경우, 위와 같은 방법을 사용할 수 없음 
+- 배열을 만들어서 자동으로 리스트(ul)를 만들고, Route역시 자동으로 만들어 지도록 하고 싶음
 
 ## GitHub Pages 배포
 - gh-pages 설치
