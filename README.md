@@ -2,6 +2,7 @@
 
 - [Youtube](https://www.youtube.com/watch?v=WLdbsl9UwDc&t=4s)
 - [강사 github](https://github.com/egoing/react-router-dom-example)
+- [GitHub Pages](https://chosangmuk.github.io/react-router-dom-example)
 
 ## 개요 & 결과 미리보기
 - [이전 수업 1. - React 기본 정리](https://github.com/ChoSangmuk/opentutorials-react-app)
@@ -86,10 +87,7 @@ npm install react-router-dom
 - Router 중 BrowserRouter 사용하기 위해서 import
 - React Router Dom을 적용하고 싶은 컴포넌트들의 최상위 컴포넌트(이 예제에서는 App)를 Router 컴포넌트로 감싸주면 됨
 ```js
-// index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+// index.js ...
 import { BrowserRouter as Router } from 'react-router-dom';
 // ...
 ReactDOM.render(
@@ -127,48 +125,128 @@ function App() {
 - "/topics" URL 입력 시, Home 컴포넌트와 Topics 컴포넌트 둘 다 사용됨
   - URL이 Route path를 포함하면 (Route로 감싼) 컴포넌트가 실행됨
   - exact를 사용하면 정확히 매칭되는 경우에만 (Route로 감싼) 컴포넌트가 사용됨
+```js
+// index.js ...
+<Route exact path="/"> <Home /> </Route>
+<Route path="/topics"> <Topics /> </Route>
+<Route path="/contact"> <Contact /> </Route>
+```
 - 동적라우팅? 
-  - 컴포넌트가 어디에 있던 간에 Route의 path를 지정하여 감싸주기만 하면, 그 컴포넌트(라우트)가 화면에 출력되게 하는 것 
+  - 컴포넌트가 어디에 있던 간에 Route의 path를 지정하여 감싸주기만 하면, 그 컴포넌트(Route)가 화면에 출력되게 하는 것 
   - 다른 말로는 Route의 path에 특정 값을 넣어 해당 페이지로 이동할 수 있게 하는 것
 
 ## Switch
-- Switch Componen는 exact를 사용하지 않고도 exact를 사용한 것과 같은 효과를 원할 때 route를 switch로 감싸주면됨
-switch 역시  임포트해서 사용
-
-- 스위치로 라우트를 감싸게 되면 path와 유사한 펏번째 컴퍼넌트가 발견되면 나머지 컴포넌트는 무시
-- 따라서, 맨 아래에 / 를 놓으면 존재하지 않는 라우터에 대한 예외 처리가 됨
+- Switch로 Route를 감쌌을 때, 입력된 URL이 path와 일치하는 1번째 Route가 발견되면 나머지 Route는 무시
+- Switch 역시 Route, Router와 마찬가지로 import해서 사용
+- 따라서, Switch의 하단에 path가 /인 Route를 놓으면 존재하지 않는 URL에 대해 예외 처리가능
+```js
+// index.js ...
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// ...
+function App() {
+  return (
+    <div>
+      <h1>React Router Dom</h1>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/topics">Topics</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <Switch>
+        <Route exact path="/"> <Home /> </Route>
+        <Route path="/topics"> <Topics /> </Route>
+        <Route path="/contact"> <Contact /> </Route>
+        <Route path="/"> <Home /> </Route>
+      </Switch>
+    </div>
+  );
+}
+```
 
 ## Link
-\<a\>\</a\> 태그를 사용하는 경우 페이지가 리로드 됨
-이를 방지하기 위해 리액트 라우터 돔에서 지우너하는 것이 Link
-
+- HTML이 기본적으로 제공하는 a 태그를 사용하는 경우, 페이지가 이동하며 새로고침 됨
+- 이를 방지하기 위해 React Router Dom에서 Link 컴포넌트를 지원
+  - a 태그 대신, Link 컴포넌트
+  - href 속성 대신, to Props
+- Link 역시 Switch, Route, Router와 마찬가지로 import해서 사용
+```js
+// index.js ...
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+// ...
+function App() {
+  return (
+    <div>
+      <h1>React Router Dom</h1>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/topics">Topics</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
+      </ul>
+      <Switch>
+        <Route exact path="/"> <Home /> </Route>
+        <Route path="/topics"> <Topics /> </Route>
+        <Route path="/contact"> <Contact /> </Route>
+        <Route path="/"> <Home /> </Route>
+      </Switch>
+    </div>
+  );
+}
 ```
-<a href>대신 <Link to > 사용
-
-  <ul>
-    <li><Link to="/">Home</Link></li>
-    <li><Link to="/topics">Topics</Link></li>
-    <li><Link to="/contact">Contact</Link></li>
-  </ul>
-```
+- Link 컴포넌트 지원 없이 같은 기능을 만든다면, a 태그의 onClick 이벤트에 event.preventDefault()를 이용해서 기본 동작을 방지하고, URL를 변경해야함 (복잡, 어려움)
 
 ## HashRouter
-- 주소, path가 변경되고 있음 - 사용자가 어떤 path로 들어와도 동일한 웹페이지를 서비스 할수 있어야함
-- HashRouter 사용 시, 주소에 # 생김
-- #이 붙으며 뒤에는 북마크라는 뜻으로 웹 서버는 #뒤를 무시함
-- 하지만 자바스크립트를 이용해서 #뒤를 가져올 수 있기 때문에, 리액트 라우터 돔이 해당 정보를 가지고 와서
-해당되는 컴포넌트를 라우팅해줌
-
-- 웹서버를 설정을 바꿔서 어떤 패스로 들어오건 간의 루트 페이지에있느느 html 파일을 서비스 할 수 있다면
-BrowserRouter를 써도됨
+- Routing과 Routing을 새로고침 없이 처리하는 Link를 알면 React Router DOM을 대략적으로 사용할 줄 아는 것
+- BrowserRouter을 사용하기 위해서는 사용자가 어떤 path로 들어와도 동일한 웹 페이지를 제공할 수 있어야함
+- HashRouter 사용 시, URL에 #이 생김 (http://localhost:3000/#/topics)
+  - #의 뒷 부분은 북마크라는 뜻으로 웹 서버는 북마크를 무시함
+  - React Router DOM이 해당 북마크 정보(#의 뒷 부분)를 가지고 와서 관련된 컴포넌트를 Routing함
 
 ## NavLink
-- 네비게이션, 링크와 유사한데 기능이 추가됨
-- react-router-dom에서 임포트해서 써야함
-- 기능은 똑같음, a 태그에 active 라는 클래스가 생김
-- 그런데 / 에도 클래스가 계속 생겨있음! 왜? route의 path와 같은 이유
-- exact 추가하면 의도대로됨
-- 이걸 이용해서 뭘할건데? 사용자가 현재 자식이 어떤페이지에 위치하고있는지 표시(css이용)해줄 수 있음 
+- Navigation Link의 줄임말, Link와 유사하지만 기능이 추가됨
+- NavLink 역시 Link, Switch, Route, Router와 마찬가지로 import해서 사용
+```js
+// index.js ...
+import { BrowserRouter as Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+// ...
+function App() {
+  return (
+    <div>
+      <h1>React Router Dom</h1>
+      <ul>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/topics">Topics</NavLink></li>
+        <li><NavLink to="/contact">Contact</NavLink></li>
+      </ul>
+      <Switch>
+        <Route exact path="/"> <Home /> </Route>
+        <Route path="/topics"> <Topics /> </Route>
+        <Route path="/contact"> <Contact /> </Route>
+        <Route path="/"> <Home /> </Route>
+      </Switch>
+    </div>
+  );
+}
+```
+- Link와 NavLink는 HTML로 표현될 때, a 태그로 변경되어 표기됨
+- 기능은 Link와 똑같지만 NavLink 클릭 시, 해당 a 태그의 속성에 class="active"가 생김
+  - class(active) 이용해서 현재 어떤 NavLink에 위치하고 있는지 표시(css이용)해줄 수 있음 
+```css
+/* index.css */
+.active{
+  background-color: skyblue;
+  text-decoration: none;
+}
+```
+- Route의 path와 같은 이유로 NavLink to="/" 에도 클래스가 계속 생겨있음
+  - exact 추가하여 정확히 일치할 때만 사용되게끔 수정
+```js
+// index.js ...
+<ul>
+  <li><NavLink exact to="/">Home</NavLink></li>
+  <li><NavLink to="/topics">Topics</NavLink></li>
+  <li><NavLink to="/contact">Contact</NavLink></li>
+</ul>
+```
 
 ## Nested Routing
 - path="/topics:id"
@@ -191,11 +269,43 @@ function Topics() {
   );
 }
 
-- 잘 동작함
-
 ## parameter
 - 양이 많아지면 별로임
 - 배열을 만들어서 자동으로 리스트가 만들어 지고, 자동으로 라우트가 만들어 지도록 하고 싶음
+
+## GitHub Pages 배포
+- gh-pages 설치
+```sh
+# Shell
+npm i gh-pages 
+
+# Check Username, projectName
+git remote -v
+# origin  https://github.com/ChoSangmuk/react-router-dom-example.git (fetch)
+# origin  https://github.com/ChoSangmuk/react-router-dom-example.git (push)
+```
+- package.json 설정
+```json
+// package.json ...
+"scripts": {
+  // ...
+  "predeploy":"npm run build",
+  "deploy":"gh-pages -d build"
+},
+// ...
+"homepage": "https://chosangmuk.github.io/react-router-dom-example"
+```
+- 배포 실행
+```sh
+# Shell
+# config git 
+git config --global user.email "tkdanr612@gmail.com"
+git config --global user.name "ChoSangmuk"
+
+# deploy
+npm run deploy
+# ChoSangmuk/pw
+```
 
 ## Reference
 - 동적라우팅

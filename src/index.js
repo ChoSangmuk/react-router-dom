@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Switch, Link, NavLink } from 'react-router-dom';
 
 function Home() {
@@ -13,37 +12,11 @@ function Home() {
   );
 }
 
-var contents = [
-  { id: 1, title: "HTML", description: "HTML ... " },
-  { id: 2, title: "JS", description: "JS ... " },
-  { id: 3, title: "React", description: "React ... " },
-]
-
-function Topic() {
-  return (
-    <div>
-      <h3>{this.props.title}</h3>
-      {this.props.description}
-    </div>
-  );
-}
-
 function Topics() {
-  var list = contents.map(content => <li key={content.id}><NavLink to={"/topics/" + content.id}>{content.title}</NavLink></li>);
   return (
     <div>
       <h2>Topics</h2>
-      <ul>
-        {list}
-      </ul>
-      <Route pat="/topics/:topic_id">
-        <Topic></Topic>
-      </Route>
-      <switch>
-        <Route path="/topics/1">HTML ... </Route>
-        <Route path="/topics/2">JS ... </Route>
-        <Route path="/topics/3">React ... </Route>
-      </switch>
+      Topics ...
     </div>
   );
 }
@@ -72,7 +45,6 @@ function App() {
         <Route path="/contact"> <Contact /> </Route>
         <Route path="/"> <Home /> </Route>
       </Switch>
-
     </div>
   );
 }
@@ -83,8 +55,3 @@ ReactDOM.render(
   </Router>
   , document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
