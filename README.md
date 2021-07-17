@@ -7,7 +7,7 @@
 ## 개요 & 결과 미리보기
 - [이전 수업 1. - React 기본 정리](https://github.com/ChoSangmuk/opentutorials-react-app)
 - [이전 수업 2. - React Class, Function 컴포넌트 정리](https://github.com/ChoSangmuk/react-class-vs-function-style)
-- [React Router Dom](https://reactrouter.com/web/guides/quick-start)는 여러 개의 페이지로 이루어진 애플리케이션을 쉽게 만들어 주게끔 도와주는 역할
+- [React Router DOM](https://reactrouter.com/web/guides/quick-start)는 여러 개의 페이지로 이루어진 애플리케이션을 쉽게 만들어 주게끔 도와주는 역할
 - URL로 애플리케이션에 접근 시 URL과 연관된 컴포넌트를 렌더링하고, 그에 필요한 State나 Props를 관리해야함
 
 ## 실습환경
@@ -58,7 +58,7 @@ function Contact() {
 function App() {
   return (
     <div>
-      <h1>React Router Dom</h1>
+      <h1>React Router DOM</h1>
       <Home />
       <Topics />
       <Contact />
@@ -76,7 +76,7 @@ ReactDOM.render(
 
 ## Install
 - Routing 혹은 Router란 사용자가 특정 URL로 애플리케이션에 접근할 때, URL에 해당되는 적당한 컴포넌트를 사용자에게 보여 주는 것 
-- React Router Dom 설치
+- React Router DOM 설치
 ```bash
 # Shell
 npm install react-router-dom
@@ -85,7 +85,7 @@ npm install react-router-dom
 ## Router
 - Router와 Route는 다른 개념
 - Router 중 BrowserRouter 사용하기 위해서 import
-- React Router Dom을 적용하고 싶은 컴포넌트들의 최상위 컴포넌트(이 예제에서는 App)를 Router 컴포넌트로 감싸주면 됨
+- React Router DOM을 적용하고 싶은 컴포넌트들의 최상위 컴포넌트(이 예제에서는 App)를 Router 컴포넌트로 감싸주면 됨
 ```js
 // index.js ...
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -109,7 +109,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 function App() {
   return (
     <div>
-      <h1>React Router Dom</h1>
+      <h1>React Router DOM</h1>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/topics">Topics</a></li>
@@ -146,7 +146,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
   return (
     <div>
-      <h1>React Router Dom</h1>
+      <h1>React Router DOM</h1>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/topics">Topics</a></li>
@@ -165,7 +165,7 @@ function App() {
 
 ## Link
 - HTML이 기본적으로 제공하는 a 태그를 사용하는 경우, 페이지가 이동하며 새로고침 됨
-- 이를 방지하기 위해 React Router Dom에서 Link 컴포넌트를 지원
+- 이를 방지하기 위해 React Router DOM에서 Link 컴포넌트를 지원
   - a 태그 대신, Link 컴포넌트
   - href 속성 대신, to Props
 - Link 역시 Switch, Route, Router와 마찬가지로 import해서 사용
@@ -176,7 +176,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 function App() {
   return (
     <div>
-      <h1>React Router Dom</h1>
+      <h1>React Router DOM</h1>
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/topics">Topics</Link></li>
@@ -211,7 +211,7 @@ import { HashRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 function App() {
   return (
     <div>
-      <h1>React Router Dom</h1>
+      <h1>React Router DOM</h1>
       <ul>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/topics">Topics</NavLink></li>
@@ -261,11 +261,11 @@ function Topics() {
         <li><NavLink to="/topics/2">JS</NavLink></li>
         <li><NavLink to="/topics/3">React</NavLink></li>
       </ul>
-      <switch>
+      <Switch>
         <Route path="/topics/1">HTML ... </Route>
         <Route path="/topics/2">JS ... </Route>
         <Route path="/topics/3">React ... </Route>
-      </switch>
+      </Switch>
     </div>
   );
 }
@@ -273,7 +273,101 @@ function Topics() {
 
 ## Parameter
 - Topics의 양이 많아지거나 동적으로 데이터를 받아오는 경우, 위와 같은 방법을 사용할 수 없음 
-- 배열을 만들어서 자동으로 리스트(ul)를 만들고, Route역시 자동으로 만들어 지도록 하고 싶음
+- 배열(contents)을 만들고 map를 이용하여 자동으로 리스트(ul)를 생성
+```js
+// index.js ...
+var contents = [
+  { id: 1, title: 'HTML', description: 'HTML is ...' },
+  { id: 2, title: 'JS', description: 'JS is ...' },
+  { id: 3, title: 'React', description: 'React is ...' },
+]
+
+function Topics() {
+  var list = contents.map(value =>
+    <li key={value.id}>
+      <NavLink to={"/topics/" + value.id}>{value.title}</NavLink>
+    </li>
+  )
+
+  return (
+    <div>
+      <h2>Topics</h2>
+      <ul>{list}</ul>
+      <Switch>
+        <Route path="/topics/1">HTML ... </Route>
+        <Route path="/topics/2">JS ... </Route>
+        <Route path="/topics/3">React ... </Route>
+      </Switch>
+    </div>
+  );
+}
+```
+- Route, Switch 부분 역시 자동으로 만들어 지도록 하고 싶음, map으로도 구현 가능
+```js
+// index.js ...
+function Topics() {
+  var list = contents.map(value =>
+    <li key={value.id}>
+      <NavLink to={"/topics/" + value.id}>{value.title}</NavLink>
+    </li>
+  )
+  var route = contents.map(value =>
+    <Route key={value.id} path={"/topics/" + value.id}>{value.title}</Route>
+  )
+
+  return (
+    <div>
+      <h2>Topics</h2>
+      <ul>{list}</ul>
+      <Switch>{route}</Switch>
+    </div>
+  );
+}
+```
+- React Router DOM에서는 Route의 path에 **:ParameterName** 을 통해 문자열로 Parameter를 입력할 수 있음
+- 하위 컴포넌트에서 해당 Parameter를 사용하기 위해서는 useParams이라는 React Hook을 사용
+- useParams 역시 NavLink, Link, Switch, Route, Router와 마찬가지로 import해서 사용
+```js
+// index.js ...
+import { HashRouter as Router, Route, Switch, NavLink, useParams } from 'react-router-dom';
+// ...
+function Topics() {
+  var list = contents.map(value =>
+    <li key={value.id}>
+      <NavLink to={"/topics/" + value.id}>{value.title}</NavLink>
+    </li>
+  )
+
+  return (
+    <div>
+      <h2>Topics</h2>
+      <ul>{list}</ul>
+      <Route path="/topics/:topic_id"><Topic /></Route>
+    </div>
+  );
+}
+
+function Topic() {
+  var { topic_id } = useParams();
+  var selected_contents = { title: "Sorry ... ", description: "Not found" }
+
+  for (var i = 0; i < contents.length; i++) {
+    if (contents[i].id === Number(topic_id)) 
+      selected_contents = contents[i];
+  }
+
+  return (
+    <div>
+      <h3>{selected_contents.title}</h3>
+      {selected_contents.description}
+    </div>
+  );
+}
+```
+
+## 수업을 마치며
+- React Server Side Rendering (SSR)
+- Code Splitting
 
 ## GitHub Pages 배포
 - gh-pages 설치
